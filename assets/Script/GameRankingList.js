@@ -14,7 +14,7 @@ cc.Class({
         this.removeChild();
         if (CC_WECHATGAME) {
             window.wx.onMessage(data => {
-                cc.log("接收主域发来消息：", data)
+                console.log("接收主域发来消息：", data)
                 if (data.messageType == 0) {//移除排行榜
                     this.removeChild();
                 } else if (data.messageType == 1) {//获取好友排行榜
@@ -31,6 +31,8 @@ cc.Class({
             this.fetchFriendData(1000);
             // this.gameOverRank(1000);
         }
+
+        cc.director.setClearColor(new cc.color(24,0,36));
     },
     submitScore(MAIN_MENU_NUM, score) { //提交得分
         if (CC_WECHATGAME) {
@@ -66,7 +68,7 @@ cc.Class({
                 }
             });
         } else {
-            cc.log("提交得分:" + MAIN_MENU_NUM + " : " + score)
+            console.log("提交得分:" + MAIN_MENU_NUM + " : " + score)
         }
     },
     removeChild() {
@@ -201,13 +203,13 @@ cc.Class({
             wx.getUserInfo({
                 openIdList: ['selfOpenId'],
                 success: (userRes) => {
-                    cc.log('success', userRes.data)
+                    console.log('success', userRes.data)
                     let userData = userRes.data[0];
                     //取出所有好友数据
                     wx.getFriendCloudStorage({
                         keyList: [MAIN_MENU_NUM],
                         success: res => {
-                            cc.log("wx.getFriendCloudStorage success", res);
+                            console.log("wx.getFriendCloudStorage success", res);
                             this.loadingLabel.active = false;
                             let data = res.data;
                             data.sort((a, b) => {
